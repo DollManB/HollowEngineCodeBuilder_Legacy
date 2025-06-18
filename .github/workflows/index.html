@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Конструктор кода</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<h1>Визуальный конструктор кода HollowEngine Legacy</h1>
+
+<!-- Кнопка открытия панели -->
+<button id="sidebarToggle">☰</button>
+
+<!-- Боковая панель с вкладками -->
+<div id="sidebar">
+  <div class="tabs">
+    <button onclick="showTab('npc')" class="tab-btn active">NPC</button>
+    <button onclick="showTab('player')" class="tab-btn">Игрок</button>
+    <button onclick="showTab('event')" class="tab-btn">События</button>
+  </div>
+
+  <!-- Блоки по категориям -->
+  <div id="blocks-container">
+
+    <!-- NPC -->
+    <div id="npc" class="block-category active">
+      <div class="sub-tabs">
+        <button onclick="showSubTab('npc', 'create')" class="sub-tab-btn active">Создание</button>
+        <button onclick="showSubTab('npc', 'actions')">Действия</button>
+        <button onclick="showSubTab('npc', 'animations')">Анимации</button>
+        <button onclick="showSubTab('npc', 'trader')">Торговец</button>
+      </div>
+      <div class="sub-blocks-container">
+        <div id="npc-create" class="sub-block-category active">
+          <div class="block" draggable="true"
+               data-type="spawnNPC"
+               data-code-template="val %name% by NPCEntity.creating{&#10;&#9;name = '%name%'&#10;&#9;pos = pos(%spawnPos%)&#10;&#9;model = '%modelName%.gltf'&#10;&#9;textures['default_color_map'] = '%textureName%.png'&#10;&#9;showName = %showName%&#10;}">
+            Создать NPC
+          </div>
+        </div>
+        <div id="npc-actions" class="sub-block-category">
+          <div class="block" draggable="true"
+               data-type="TP NPC"
+               data-code-template="%npcId%.tpTo{%pos%}">
+            Телепортировать NPC
+          </div>
+        </div>
+        <div id="npc-animations" class="sub-block-category">
+          <div class="block" draggable="true"
+               data-type="PlayAnimation"
+               data-code-template="%nameNPC% play%animationType%{'%nameAnimation%'}">
+            Проиграть анимацию
+          </div>
+        </div>
+        <div id="npc-animations" class="sub-block-category">
+          <div class="block" draggable="true"
+               data-type="ReplayNPC"
+               data-code-template="%nameNPC% replay {'%nameNBT%.nbt'}">
+            Проиграть реплей на нпс
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Игрок -->
+    <div id="player" class="block-category">
+      <div class="sub-tabs">
+        <button onclick="showSubTab('player', 'create')" class="sub-tab-btn active">Создание</button>
+        <button onclick="showSubTab('player', 'actions')">Действия</button>
+      </div>
+      <div class="sub-blocks-container">
+        <div id="player-create" class="sub-block-category active">
+          <div class="block" draggable="true"
+               data-type="createPlayer"
+               data-code-template="val player by server.players">
+            Создать игрока
+          </div>
+        </div>
+        <div id="player-actions" class="sub-block-category">
+          <div class="block" draggable="true"
+               data-type="TP Player"
+               data-code-template="player.tpTo{pos(%pos%)}">
+            Телепортировать Игрока
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Рабочая область -->
+<div id="workspace" class="workspace">
+  <p>Перетащите сюда блоки</p>
+</div>
+
+<!-- Кнопка и вывод кода -->
+<button onclick="generateCode()">Получить код</button>
+<pre id="output"></pre>
+
+<script src="script.js"></script>
+</body>
+</html>
